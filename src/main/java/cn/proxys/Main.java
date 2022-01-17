@@ -4,10 +4,11 @@
 package cn.proxys;
 
 import cn.proxys.impl.CheckProxy;
+import cn.proxys.impl.DownAndUpload;
+import cn.proxys.impl.pull.PullProxysImpl;
 import cn.proxys.utils.FileUtils;
 import cn.proxys.utils.TextUtils;
 import cn.proxys.utils.Threads;
-import ff.jnezha.jnt.Jnt;
 import ff.jnezha.jnt.cs.GithubHelper;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -17,21 +18,19 @@ public class Main {
 
     private static volatile CopyOnWriteArrayList<String> proxys = new CopyOnWriteArrayList<String>();
     private static volatile StringBuilder sb = new StringBuilder();
+    private static String token = System.getenv("GITHUB_TOKEN");
 
     //https://raw.githubusercontent.com/parserpp/ip_ports/main/proxyinfo.txt
     //https://cdn.jsdelivr.net/gh/parserpp/ip_ports/proxyinfo.txt
     public static void main(String[] args) {
 
-        String token = System.getenv("GITHUB_TOKEN");
-        if (args.length > 0) {
-            token = args[0];
-        }
-        if (TextUtils.isEmpty(token)) {
-            System.err.println("token is null");
-        } else {
-            System.out.println("token is ok");
-        }
-        getInfoFromUrl();
+        getTokean(args);
+        PullProxysImpl.pull();
+        DownAndUpload.down();
+        checkAndsave();
+    }
+
+    private static void checkAndsave() {
         for (int i = 0; i < proxys.size(); i++) {
             postToCheck(proxys.get(i));
         }
@@ -44,6 +43,17 @@ public class Main {
         } else {
             FileUtils.saveTextToFile("result.txt", sb.toString(), false);
             System.out.println("最终解雇:" + sb.toString());
+        }
+    }
+
+    private static void getTokean(String[] args) {
+        if (args.length > 0) {
+            token = args[0];
+        }
+        if (TextUtils.isEmpty(token)) {
+            System.err.println("token is null");
+        } else {
+            System.out.println("token is ok");
         }
     }
 
@@ -66,27 +76,6 @@ public class Main {
         sb.append(ip).append(":").append(port).append("\n");
     }
 
-
-    private static void getInfoFromUrl() {
-        String s1 = "https://raw.githubusercontent.com/parserpp/ip_ports/main/proxyinfo.txt";
-        String s2 = "https://cdn.jsdelivr.net/gh/parserpp/ip_ports/proxyinfo.txt";
-        String body = Jnt.get(s1);
-        if (TextUtils.isEmpty(body)) {
-            body = Jnt.get(s2);
-        }
-        System.out.println(body);
-        if (body.contains("\n")) {
-
-            String[] ss = body.split("\n");
-            System.out.println("包含\n---->" + ss.length);
-            if (ss != null) {
-                for (String ww : ss) {
-                    addResult(ww);
-                }
-            }
-        }
-
-    }
 
     public static synchronized void addResult(String ip, int port) {
         addResult(ip + ":" + port);

@@ -11,6 +11,10 @@ import cn.proxys.utils.Threads;
  */
 public class PullProxysImpl {
     public static void main(String[] args) {
+        pull();
+    }
+
+    public static void pull() {
         ConfigurlUrlsWork.pull();
         Threads.waitForAsyncTask();
         System.out.println("所有任务结束");

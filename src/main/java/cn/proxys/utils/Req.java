@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Random;
 
 /**
  * @Copyright © 2022 sanbo Inc. All rights reserved.
@@ -47,7 +48,9 @@ public class Req {
             //不跟踪抓取
             wc.getOptions().setDoNotTrackEnabled(false);
             WebRequest request = new WebRequest(new URL(url));
-            request.setAdditionalHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0");
+            int x = new Random(System.nanoTime()).nextInt(UserAgents.uas.length - 1);
+            String ua = UserAgents.uas[x];
+            request.setAdditionalHeader("User-Agent", ua);
 //        request.setAdditionalHeader("Cookie", "PLAY_LANG=cn; _plh=b9289d0a863a8fc9c79fb938f15372f7731d13fb; PLATFORM_SESSION=39034d07000717c664134556ad39869771aabc04-_ldi=520275&_lsh=8cf91cdbcbbb255adff5cba6061f561b642f5157&csrfToken=209f20c8473bc0518413c226f898ff79cd69c3ff-1539926671235-b853a6a63c77dd8fcc364a58&_lpt=%2Fcn%2Fvehicle_sales%2Fsearch&_lsi=1646321; _ga=GA1.2.2146952143.1539926675; _gid=GA1.2.1032787565.1539926675; _plh_notime=8cf91cdbcbbb255adff5cba6061f561b642f5157");
 
             request.setCharset(StandardCharsets.UTF_8);
