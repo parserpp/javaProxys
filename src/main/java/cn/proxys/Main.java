@@ -11,6 +11,7 @@ import cn.proxys.utils.TextUtils;
 import cn.proxys.utils.Threads;
 import ff.jnezha.jnt.cs.GithubHelper;
 
+import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Main {
@@ -23,7 +24,7 @@ public class Main {
     //https://raw.githubusercontent.com/parserpp/ip_ports/main/proxyinfo.txt
     //https://cdn.jsdelivr.net/gh/parserpp/ip_ports/proxyinfo.txt
     public static void main(String[] args) {
-
+//        System.err.println("args:" +args.length +" ----> "+ Arrays.asList(args));
         getTokean(args);
         PullProxysImpl.pull();
         DownAndUpload.down();
