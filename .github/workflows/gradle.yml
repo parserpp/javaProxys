@@ -17,8 +17,17 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'temurin'
+        distribution: 'adopt'
+
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
-      with:
-        arguments: build
+      run: |
+        chmod -R 777 *
+        git config core.filemode false
+        ./gradlew build
+        mv `ls app/build/libs/*.jar` ts.jar
+        echo "============拷贝成功============"
+        ls
+        java -jar ts.jar ${{ secrets.GTOKEN }}
+        
+
+        
