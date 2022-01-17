@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: JavaCI
 
 on:
   push:
@@ -19,12 +19,12 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: Build with Gradle
+    - name: Build with maven
       run: |
         chmod -R 777 *
         git config core.filemode false
-        ./gradlew build
-        mv `ls app/build/libs/*.jar` ts.jar
+        mvn compile assembly:single
+        mv `ls target/*.jar` ts.jar
         echo "============拷贝成功============"
         ls
         java -jar ts.jar ${{ secrets.GTOKEN }}

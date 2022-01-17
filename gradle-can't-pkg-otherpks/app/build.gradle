@@ -1,0 +1,78 @@
+plugins {
+    id 'application'
+    id 'java'
+//    id 'eclipse'
+}
+
+//configurations.implementation.canBeResolved = true
+configurations {
+// A configuration meant for consumers that need the API of this component
+    exposedApi {
+        // This configuration is an "outgoing" configuration, it's not meant to be resolved
+        canBeResolved = false
+        // As an outgoing configuration, explain that consumers may want to consume it
+        canBeConsumed = true
+    }
+// A configuration meant for consumers that need the implementation of this component
+    exposedRuntime {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+}
+
+jar {
+    archiveBaseName = 'javaProxys'
+    archiveVersion = '1.0.0'
+//    设置jar包，指定主类
+    manifest {
+        attributes(
+                "Manifest-Version": archiveVersion,
+                "Main-Class": "cn.proxys.Main"   //主函数的名称
+        )
+    }
+
+}
+
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'com.google.guava:guava:30.1.1-jre'
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation 'org.jsoup:jsoup:1.14.3'
+    // https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit
+    implementation 'net.sourceforge.htmlunit:htmlunit:2.56.0'
+    // https://mvnrepository.com/artifact/commons-net/commons-net
+    implementation 'commons-net:commons-net:3.8.0'
+    implementation 'com.github.netcapture:Jnt:2.2.1'
+
+    implementation gradleApi() // 声明一个当前 Gradle 版本 api 的依赖，用于开发自定义 Gradle task 或 plugin
+    implementation localGroovy() // 声明一个当前 Gradle 版本使用的 Groovy 的依赖，用于开发自定义 Gradle task 或 plugin
+    testImplementation gradleTestKit() // 声明一个当前 Gradle 版本使用的 TestKit 的依赖，用于测试 Gradle plugin 或 build script
+
+}
+
+
+//mainClass = 'javaProxys.App'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+// 修改不了主类，没用
+//application {
+//    mainClass = 'javaProxys.App'
+//}
+
+repositories {
+    maven {
+        url 'https://maven.aliyun.com/repository/jcenter'
+    }
+    maven {
+        url 'https://maven.aliyun.com/repository/central'
+    }
+    maven {
+        url 'https://maven.aliyun.com/repository/google'
+    }
+    mavenCentral()
+    jcenter()
+}
