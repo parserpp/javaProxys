@@ -65,9 +65,15 @@ public class Main {
             @Override
             public void run() {
 
-                if (CheckProxy.isConnnectedIpA(ip, port) || CheckProxy.isConnnectedIpB(ip, port) || CheckProxy.isConnnectedIpC(ip, port) || CheckProxy.isConnnectedByBaidu(ip, port) || CheckProxy.isConnnectedByWandoujia(ip, port)) {
-                    addAliveIp(ip, port);
+                if (CheckProxy.isConnnectedByBaidu(ip, port) || CheckProxy.isConnnectedByWandoujia(ip, port)) {
+                    if (CheckProxy.isConnnectedIpA(ip, port) || CheckProxy.isConnnectedIpB(ip, port)
+                            || CheckProxy.isConnnectedIpC(ip, port)
+                    ) {
+                        addAliveIp(ip, port);
+                    }
                 }
+
+
             }
         });
     }

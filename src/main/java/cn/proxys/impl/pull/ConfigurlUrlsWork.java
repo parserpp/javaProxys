@@ -69,6 +69,7 @@ public class ConfigurlUrlsWork {
                     port = Integer.parseInt(m.group(2));
                     System.out.println(url + "--" + Thread.currentThread().getName() + "----" +
                             "getipA====>" + ip + ":" + port);
+                    Main.addResult(ip, port);
                 }
             } else {
                 p = Pattern.compile("(\\d+\\.\\d+\\.\\d+\\.\\d+)\\:(\\d+)");
@@ -78,10 +79,11 @@ public class ConfigurlUrlsWork {
                     port = Integer.parseInt(m.group(2));
                     System.out.println(url + "--" + Thread.currentThread().getName() + "----" +
                             "getipB====>" + ip + ":" + port);
+                    Main.addResult(ip, port);
                 }
             }
-            System.out.println("proxy: [" + ip + ":" + port + "]");
-            Main.addResult(ip, port);
+//            System.out.println("proxy: [" + ip + ":" + port + "]");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
