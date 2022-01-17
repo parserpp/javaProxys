@@ -1,4 +1,4 @@
-package cn.proxys;
+package cn.proxys.impl;
 
 import cn.proxys.utils.FileUtils;
 import cn.proxys.utils.Threads;
@@ -15,13 +15,17 @@ import java.util.List;
 
 /**
  * @Copyright © 2022 sanbo Inc. All rights reserved.
- * @Description: TODO
+ * @Description: 建议链接是否有效
  * @Version: 1.0
  * @Create: 2022/1/14 5:08 PM
  * @author: sanbo
  */
-public class Ts {
+public class CheckUrls {
     public static void main(String[] args) {
+        checkURl();
+    }
+
+    private static void checkURl() {
         List<String> urs = FileUtils.readForArray("data/Configurl.conf");
         for (String url : urs) {
             Threads.sumbit(new Runnable() {
@@ -36,12 +40,6 @@ public class Ts {
             });
 
         }
-
-//        try {
-//            getDocument("https://www.kuaidaili.com/free/outha/880/?yundun=c63d3862084f03a6368f");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
 

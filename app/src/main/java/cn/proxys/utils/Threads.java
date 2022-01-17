@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author: sanbo
  */
 public class Threads {
-    private static ExecutorService executor = Executors.newScheduledThreadPool(5);
+    private static ExecutorService executor = Executors.newScheduledThreadPool(8);
 
     /**
      * 耗时服务线程池.处理网络,缓存和文件操作
@@ -20,7 +20,7 @@ public class Threads {
     public synchronized static void sumbit(Runnable command) {
 
         if (executor.isShutdown()) {
-            executor = Executors.newScheduledThreadPool(5);
+            executor = Executors.newScheduledThreadPool(8);
         }
         executor.submit(command);
     }

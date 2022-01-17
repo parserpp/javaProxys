@@ -1,5 +1,6 @@
-package cn.proxys.impl;
+package cn.proxys.impl.pull;
 
+import cn.proxys.Main;
 import cn.proxys.utils.FileUtils;
 import cn.proxys.utils.TextUtils;
 import cn.proxys.utils.Threads;
@@ -18,9 +19,10 @@ import java.util.regex.Pattern;
  * @Create: 2022/1/14 5:41 PM
  * @author: sanbo
  */
-public class UrlsWork {
+public class ConfigurlUrlsWork {
 
     private static List<String> urls = new ArrayList<String>();
+
     public static void pull() {
         // 1.parser url
         parserUrls();
@@ -79,11 +81,9 @@ public class UrlsWork {
                 }
             }
             System.out.println("proxy: [" + ip + ":" + port + "]");
-//            if (ip != null && port != -1) {
-//                PublicDB.insertToDB(ip, port);
-//            }
+            Main.addResult(ip, port);
         } catch (Exception e) {
-            //L.e("error", e.toString());
+            e.printStackTrace();
         }
 
     }
